@@ -1,0 +1,5 @@
+11bf1797be2450ed498fa7e773f8ecb836f10929
+
+APIURL
+
+http://qiita.com/api/v2/
