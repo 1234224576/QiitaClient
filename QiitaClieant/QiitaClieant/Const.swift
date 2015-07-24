@@ -25,7 +25,7 @@ final class Const {
         return join("/", [self.osName, self.osVersion, self.appVersion])
     }
     
-    let baseApiUrlString = "http://qiita.com/api/v2/" //QiitaAPIのbaseURL
+    let baseApiUrlString = "https://qiita.com/api/v1/" //QiitaAPIのbaseURL
     let priveteAccessToken = "11bf1797be2450ed498fa7e773f8ecb836f10929";//Qiitaから発行された個人用トークン
     
     
