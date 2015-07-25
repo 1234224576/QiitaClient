@@ -56,6 +56,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
                         User.sharedUser.userName = jsondata["url_name"].string!
                         User.sharedUser.url_name = weakSelf.userNameField.text
                         User.sharedUser.password = weakSelf.passwordField.text
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let controller: SplitViewController = storyboard.instantiateInitialViewController() as! SplitViewController
+                        weakSelf.presentViewController(controller, animated: true, completion: nil)
+                     
                     }
                 }
             }

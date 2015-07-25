@@ -49,9 +49,24 @@
                     <view key="view" contentMode="scaleToFill" id="vAu-4d-BFL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bXh-NW-7TD">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bXh-NW-7TD" firstAttribute="leading" secondItem="vAu-4d-BFL" secondAttribute="leading" id="BgP-rw-bKv"/>
+                            <constraint firstAttribute="bottom" secondItem="bXh-NW-7TD" secondAttribute="bottom" id="ORA-eo-8s1"/>
+                            <constraint firstItem="bXh-NW-7TD" firstAttribute="top" secondItem="QR6-eG-qsO" secondAttribute="bottom" constant="-64" id="jDU-jC-230"/>
+                            <constraint firstAttribute="trailing" secondItem="bXh-NW-7TD" secondAttribute="trailing" id="mER-yW-U1p"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="a0m-7c-hS4"/>
+                    <connections>
+                        <outlet property="tableView" destination="bXh-NW-7TD" id="msK-6E-4Lg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tiD-IB-LMy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
