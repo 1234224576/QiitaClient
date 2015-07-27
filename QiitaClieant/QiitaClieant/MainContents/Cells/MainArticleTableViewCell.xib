@@ -15,14 +15,19 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あああああああああああああああああああああ" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7V-GR-fMi">
-                        <rect key="frame" x="67" y="8" width="253" height="60"/>
+                        <rect key="frame" x="74" y="8" width="246" height="60"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="253" id="50O-ev-VL2"/>
+                            <constraint firstAttribute="width" constant="235" id="50O-ev-VL2"/>
                             <constraint firstAttribute="height" constant="60" id="ZwK-WV-qdh"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="50O-ev-VL2"/>
+                            </mask>
+                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015/02/22" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Stn-zQ-ujf">
                         <rect key="frame" x="232" y="78" width="88" height="21"/>
@@ -31,7 +36,7 @@
                             <constraint firstAttribute="height" constant="21" id="uaz-A7-GtW"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgT-Kc-tG1">
@@ -41,7 +46,7 @@
                             <constraint firstAttribute="height" constant="21" id="zth-9Z-WS5"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ストック" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFe-au-bAp">
@@ -51,7 +56,7 @@
                             <constraint firstAttribute="height" constant="21" id="nEX-q9-TAX"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="titlelogo" translatesAutoresizingMaskIntoConstraints="NO" id="OjP-Pk-LBg">
@@ -75,7 +80,7 @@
                             <constraint firstAttribute="width" constant="42" id="PYv-Us-2pf"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234224576" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4z-2d-Azp">
@@ -85,7 +90,7 @@
                             <constraint firstAttribute="width" constant="108" id="UBl-xD-n1R"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -95,16 +100,16 @@
                     <constraint firstAttribute="trailingMargin" secondItem="C7V-GR-fMi" secondAttribute="trailing" constant="-8" id="5QA-8g-LWZ"/>
                     <constraint firstItem="Uy7-ow-w7h" firstAttribute="leading" secondItem="o4z-2d-Azp" secondAttribute="trailing" constant="8" id="6QP-O2-apx"/>
                     <constraint firstItem="cFe-au-bAp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="FwZ-5T-HQX"/>
-                    <constraint firstItem="C7V-GR-fMi" firstAttribute="leading" secondItem="cFe-au-bAp" secondAttribute="trailing" constant="1" id="M5y-yq-1gG"/>
+                    <constraint firstItem="Stn-zQ-ujf" firstAttribute="baseline" secondItem="o4z-2d-Azp" secondAttribute="baseline" id="Yrp-PS-hbi"/>
                     <constraint firstItem="YgT-Kc-tG1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="eIN-We-SxU"/>
-                    <constraint firstItem="Stn-zQ-ujf" firstAttribute="top" secondItem="C7V-GR-fMi" secondAttribute="bottom" constant="10" id="ehY-u2-rOz"/>
+                    <constraint firstItem="C7V-GR-fMi" firstAttribute="leading" secondItem="cFe-au-bAp" secondAttribute="trailing" constant="8" id="eVm-aL-NDX"/>
                     <constraint firstItem="OjP-Pk-LBg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="frt-7i-uaa"/>
                     <constraint firstItem="OjP-Pk-LBg" firstAttribute="top" secondItem="cFe-au-bAp" secondAttribute="bottom" constant="17" id="gnl-kq-4jF"/>
                     <constraint firstItem="o4z-2d-Azp" firstAttribute="top" secondItem="C7V-GR-fMi" secondAttribute="bottom" constant="8" id="hS6-HZ-FJg"/>
+                    <constraint firstItem="Stn-zQ-ujf" firstAttribute="centerY" secondItem="Uy7-ow-w7h" secondAttribute="centerY" id="hgg-F8-NUb"/>
                     <constraint firstItem="oHN-Yf-ept" firstAttribute="top" secondItem="C7V-GR-fMi" secondAttribute="bottom" constant="10" id="pBj-Gd-JxS"/>
                     <constraint firstItem="cFe-au-bAp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="30" id="qtz-lk-2zf"/>
                     <constraint firstItem="YgT-Kc-tG1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="uSk-rF-0zZ"/>
-                    <constraint firstItem="Uy7-ow-w7h" firstAttribute="top" secondItem="C7V-GR-fMi" secondAttribute="bottom" constant="13" id="vH6-f6-nbM"/>
                     <constraint firstItem="C7V-GR-fMi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="wt4-v9-awz"/>
                     <constraint firstItem="Stn-zQ-ujf" firstAttribute="leading" secondItem="oHN-Yf-ept" secondAttribute="trailing" constant="8" id="x7x-hz-IoY"/>
                 </constraints>

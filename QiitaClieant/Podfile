@@ -8,6 +8,7 @@ pod 'Alamofire', '~> 1.2'
 pod 'SwiftyJSON', '~> 2.2.0'
 pod 'SVProgressHUD'
 pod 'SVPullToRefresh', '~> 0.4.1'
+pod 'JASidePanels'
 end
 
 target 'QiitaClieantTests' do

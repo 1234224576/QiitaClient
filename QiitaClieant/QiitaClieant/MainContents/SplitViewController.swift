@@ -13,9 +13,10 @@ class SplitViewController: UISplitViewController,UISplitViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-        self.preferredDisplayMode = UISplitViewControllerDisplayMode.AllVisible
+        self.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay
         // Do any additional setup after loading the view.
     }
+    
     
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController!, ontoPrimaryViewController primaryViewController: UIViewController!) -> Bool {
         return true

@@ -13,6 +13,10 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
+        self.title = "あおい"
+        
+        
         tableView.delegate = self
         tableView.dataSource = self
         self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell")
@@ -68,15 +72,17 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func openSideMenu(){
+        self.sidePanelController.showLeftPanelAnimated(true)
     }
-    */
+
+    func setupNavigationBar(){
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 122.0/255.0, green: 188.0/255.0, blue: 46.0/255.0, alpha: 1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.navigationController?.navigationBar.barStyle = .Default
+        let menuButton = UIBarButtonItem(image:UIImage(named: "icon_menu")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), style: .Plain, target: self, action: "openSideMenu")
+        self.navigationItem.leftBarButtonItem = menuButton
+    }
+
 
 }

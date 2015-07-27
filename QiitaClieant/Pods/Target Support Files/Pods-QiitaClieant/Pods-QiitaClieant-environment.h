@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_Alamofire 2
 #define COCOAPODS_VERSION_PATCH_Alamofire 3
 
+// JASidePanels
+#define COCOAPODS_POD_AVAILABLE_JASidePanels
+#define COCOAPODS_VERSION_MAJOR_JASidePanels 1
+#define COCOAPODS_VERSION_MINOR_JASidePanels 3
+#define COCOAPODS_VERSION_PATCH_JASidePanels 2
+
 // MagicalRecord
 #define COCOAPODS_POD_AVAILABLE_MagicalRecord
 #define COCOAPODS_VERSION_MAJOR_MagicalRecord 2

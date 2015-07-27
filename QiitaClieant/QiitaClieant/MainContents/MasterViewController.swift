@@ -8,13 +8,17 @@
 
 import UIKit
 
-class MasterViewController: DLHamburguerViewController {
+class MasterViewController:JASidePanelController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -22,8 +26,9 @@ class MasterViewController: DLHamburguerViewController {
     }
     
     override func awakeFromNib() {
-        self.contentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("MainNavigationController") as! UIViewController
-        self.menuViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SideMenuViewController") as! UIViewController
+        self.centerPanel = self.storyboard?.instantiateViewControllerWithIdentifier("MainNavigationController") as! UIViewController
+        self.leftPanel = self.storyboard?.instantiateViewControllerWithIdentifier("SideMenuViewController") as! UIViewController
+        self.rightPanel = nil;
     }
     
     /*

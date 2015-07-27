@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="NbM-OM-9dm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master View Controller-->
@@ -40,10 +41,10 @@
             </objects>
             <point key="canvasLocation" x="657" y="1014"/>
         </scene>
-        <!--Hamburguer Navigation Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="E39-L1-zjZ">
             <objects>
-                <navigationController storyboardIdentifier="MainNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d2X-CQ-BdE" customClass="DLHamburguerNavigationController" customModule="QiitaClieant" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d2X-CQ-BdE" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="K71-rJ-BPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -93,7 +94,7 @@
         <!--Side Menu View Controller-->
         <scene sceneID="bwd-MJ-qHM">
             <objects>
-                <viewController storyboardIdentifier="SideMenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PT1-qM-sYj" customClass="SideMenuViewController" customModule="QiitaClieant" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SideMenuViewController" id="PT1-qM-sYj" customClass="SideMenuViewController" customModule="QiitaClieant" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QWZ-qy-AXl"/>
                         <viewControllerLayoutGuide type="bottom" id="lM7-Bd-tPb"/>
@@ -101,12 +102,27 @@
                     <view key="view" contentMode="scaleToFill" id="wfM-S1-8gG">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1rR-Dx-kxG">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="0.77785773030000005" green="0.18676868460000001" blue="0.093256417879999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="1rR-Dx-kxG" secondAttribute="trailing" constant="-16" id="2PH-jj-6Z7"/>
+                            <constraint firstItem="lM7-Bd-tPb" firstAttribute="top" secondItem="1rR-Dx-kxG" secondAttribute="bottom" id="Dbw-1t-GIg"/>
+                            <constraint firstItem="1rR-Dx-kxG" firstAttribute="top" secondItem="wfM-S1-8gG" secondAttribute="topMargin" id="YhW-od-nec"/>
+                            <constraint firstItem="1rR-Dx-kxG" firstAttribute="leading" secondItem="wfM-S1-8gG" secondAttribute="leadingMargin" constant="-16" id="j38-LY-9gU"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="1rR-Dx-kxG" id="M7e-oX-SSy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEP-ya-FsS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1577" y="894"/>
+            <point key="canvasLocation" x="1708" y="789"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="5qj-f8-zem">
