@@ -25,10 +25,11 @@ class MasterViewController:JASidePanelController{
         // Dispose of any resources that can be recreated.
     }
     
+
+    
     override func awakeFromNib() {
         self.centerPanel = self.storyboard?.instantiateViewControllerWithIdentifier("MainNavigationController") as! UIViewController
         self.leftPanel = self.storyboard?.instantiateViewControllerWithIdentifier("SideMenuViewController") as! UIViewController
-        self.rightPanel = nil;
     }
     
     /*

@@ -15,10 +15,10 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         super.viewDidLoad()
         self.setupNavigationBar()
         self.title = "あおい"
-        
-        
+
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
         self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell")
         // Do any additional setup after loading the view.
         

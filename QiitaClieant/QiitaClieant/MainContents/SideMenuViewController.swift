@@ -11,12 +11,18 @@ import UIKit
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var contributionLabel: UILabel!
     
     // data
     let segues = ["option 1", "option 2", "option 3"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.userImageView.layer.cornerRadius = CGRectGetHeight(userImageView.frame)/2.0;
+        self.userImageView.layer.masksToBounds = true
+        
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell")

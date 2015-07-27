@@ -30,7 +30,7 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015/02/22" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Stn-zQ-ujf">
-                        <rect key="frame" x="232" y="78" width="88" height="21"/>
+                        <rect key="frame" x="225" y="78" width="88" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="88" id="AOn-SC-yvN"/>
                             <constraint firstAttribute="height" constant="21" id="uaz-A7-GtW"/>
@@ -74,10 +74,10 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHN-Yf-ept">
-                        <rect key="frame" x="182" y="78" width="42" height="21"/>
+                        <rect key="frame" x="182" y="78" width="35" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Dm8-4v-jJg"/>
-                            <constraint firstAttribute="width" constant="42" id="PYv-Us-2pf"/>
+                            <constraint firstAttribute="width" constant="35" id="PYv-Us-2pf"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="11"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -107,12 +107,18 @@
                     <constraint firstItem="OjP-Pk-LBg" firstAttribute="top" secondItem="cFe-au-bAp" secondAttribute="bottom" constant="17" id="gnl-kq-4jF"/>
                     <constraint firstItem="o4z-2d-Azp" firstAttribute="top" secondItem="C7V-GR-fMi" secondAttribute="bottom" constant="8" id="hS6-HZ-FJg"/>
                     <constraint firstItem="Stn-zQ-ujf" firstAttribute="centerY" secondItem="Uy7-ow-w7h" secondAttribute="centerY" id="hgg-F8-NUb"/>
+                    <constraint firstItem="C7V-GR-fMi" firstAttribute="leading" secondItem="cFe-au-bAp" secondAttribute="trailing" constant="8" id="jeC-gb-Cpd"/>
                     <constraint firstItem="oHN-Yf-ept" firstAttribute="top" secondItem="C7V-GR-fMi" secondAttribute="bottom" constant="10" id="pBj-Gd-JxS"/>
                     <constraint firstItem="cFe-au-bAp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="30" id="qtz-lk-2zf"/>
                     <constraint firstItem="YgT-Kc-tG1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="uSk-rF-0zZ"/>
                     <constraint firstItem="C7V-GR-fMi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="wt4-v9-awz"/>
                     <constraint firstItem="Stn-zQ-ujf" firstAttribute="leading" secondItem="oHN-Yf-ept" secondAttribute="trailing" constant="8" id="x7x-hz-IoY"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="eVm-aL-NDX"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
         </tableViewCell>
     </objects>
