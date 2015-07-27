@@ -1,6 +1,0 @@
-framework module MLFlyOverMenu {
-  umbrella header "Pods-QiitaClieant-MLFlyOverMenu-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -17,12 +17,13 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         tableView.dataSource = self
         self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell")
         // Do any additional setup after loading the view.
+        
     }
     //MARK: -UITableViewDelegate,Datasorce
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MainArticleTableViewCell", forIndexPath: indexPath) as! MainArticleTableViewCell
-        if(indexPath.row % 2 != 0){
+        if(indexPath.row % 2 == 0){
             cell.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         }else{
             cell.backgroundColor = UIColor.whiteColor()
