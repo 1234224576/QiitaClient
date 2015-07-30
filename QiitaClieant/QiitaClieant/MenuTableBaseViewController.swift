@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
+enum MenuType {
+    case New
+    case Pop
+    case Stock
+    case Tag
+}
 class MenuTableBaseViewController: UIViewController{
-
+    
+    var menutype = MenuType.New
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
     }
 
