@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SVProgressHUD
+import SwiftyJSON
 
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
@@ -26,7 +29,35 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell")
+        self.userNameLabel.text = User.sharedUser.url_name
         // Do any additional setup after loading the view.
+        self.loadUserdata()
+        
+    }
+    
+    func loadUserdata(){
+        Alamofire.request(.GET, Const().baseApiUrlString+"users/\(User.sharedUser.url_name)")
+            .responseJSON{[weak self] (request, response, json, error) in
+                print(request)
+            if let weakSelf = self{
+                if let j:AnyObject = json{
+                    let jsondata = JSON(j)
+                    print(jsondata)
+                    if jsondata["error"] != nil{
+                        //取得失敗
+                        print(jsondata)
+                    }else{
+                        //取得成功
+                        print(jsondata["profile_image_url"])
+                        UIImage.loadAsyncFromURL(jsondata["profile_image_url"].string!, callback: {
+                            (image: UIImage?) in
+                            weakSelf.userImageView.image = image
+                        })
+//
+                    }
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
