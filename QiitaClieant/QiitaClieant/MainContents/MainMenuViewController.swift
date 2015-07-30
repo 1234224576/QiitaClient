@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import Alamofire
+import SVProgressHUD
+import SwiftyJSON
 
 class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource,UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var articles:[Article] = []
+    var mode = MenuType.New
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBar()
@@ -19,28 +26,31 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
-        self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell")
+        loadArticle()
+        
         // Do any additional setup after loading the view.
         
     }
     //MARK: -UITableViewDelegate,Datasorce
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MainArticleTableViewCell", forIndexPath: indexPath) as! MainArticleTableViewCell
+        self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell\(indexPath.row)")
+        let cell = tableView.dequeueReusableCellWithIdentifier("MainArticleTableViewCell\(indexPath.row)", forIndexPath: indexPath) as! MainArticleTableViewCell
+        
         if(indexPath.row % 2 == 0){
             cell.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         }else{
             cell.backgroundColor = UIColor.whiteColor()
         }
-//        if let json = self.responseJsonData{
-////            if json[indexPath.row] != nil{
-////                cell.titleLabel.text = json[indexPath.row]["title"].string
-////                cell.nameLabel.text = json[indexPath.row]["media"].string
-////                cell.dateLabel.text = publishedStringToDate(json[indexPath.row]["published"].string!)
-////                cell.url = json[indexPath.row]["link"].string
-////                cell.articleId = json[indexPath.row]["id"].string?.toInt()
-//            }
-//        }
+        let article = articles[indexPath.row]
+        cell.titleLabel.text = article.title
+        cell.stockLabel.text = "\(article.stock)"
+        cell.userNameLabel.text = article.username
+        cell.commentLabel.text = "\(article.commentNum)"
+        UIImage.loadAsyncFromURL(article.userImageUrl, callback: {
+            (image: UIImage?) in
+            cell.userImageView.image = image
+        })
         return cell
     }
 //    func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -63,7 +73,7 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
 //            return min(self.page * kOnceLoadArticle,json.count)
 //        }
 //        return self.page * kOnceLoadArticle
-        return 100;
+        return articles.count;
     }
 
 
@@ -83,6 +93,69 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         let menuButton = UIBarButtonItem(image:UIImage(named: "icon_menu")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), style: .Plain, target: self, action: "openSideMenu")
         self.navigationItem.leftBarButtonItem = menuButton
     }
+    
+    //LoadArticle
+    func loadArticle(){
+        switch mode{
+            case .New:
+                loadNewArticle()
+            case .Pop:
+                loadPopArticle()
+            case .Stock:
+                loadStockArticle()
+            case .Tag:
+                loadTagArticle()
+            default:
+                break
+        }
+    }
+    private func loadNewArticle(){
+        Alamofire.request(.GET, Const().baseApiUrlString+"items")
+            .responseJSON{[weak self] (request, response, json, error) in
+            if let weakSelf = self{
+                if let j:AnyObject = json{
+                    let jsondata = JSON(j)
+                    if jsondata["error"] != nil{
+                        //取得失敗
+                        print(jsondata)
+                    }else{
+                        //取得成功
+                        weakSelf.insertArticleData(jsondata)
+                    }
+                }
+            }
+        }
 
+    }
+    private func loadPopArticle(){
+        
+    }
+    private func loadStockArticle(){
+        
+    }
+    private func loadTagArticle(){
+        
+    }
+    
+    private func insertArticleData(jsondata:JSON){
+
+        for var i=0;i<jsondata.count;i+=1{
+            let article = Article()
+            article.title = jsondata[i]["title"].string!
+            article.stock = jsondata[i]["stock_count"].int!
+            article.username = jsondata[i]["user"]["url_name"].string!
+            article.userImageUrl = jsondata[i]["user"]["profile_image_url"].string!
+            article.commentNum = jsondata[i]["comment_count"].int!
+            article.url = jsondata[i]["url"].string!
+            articles.append(article)
+            
+            print(jsondata[i]["title"].string!)
+            print("\n")
+            print(jsondata[i]["user"]["url_name"].string!)
+            print("\n")
+            
+        }
+        self.tableView.reloadData()
+    }
 
 }

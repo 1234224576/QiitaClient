@@ -140,6 +140,15 @@
                                 <rect key="frame" x="0.0" y="120" width="600" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewx-bD-ej9">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapProfileButton:" destination="PT1-qM-sYj" eventType="touchUpInside" id="YMP-h1-tJ6"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9y6-xW-GhX">
                                 <rect key="frame" x="21" y="60" width="60" height="60"/>
                                 <constraints>
@@ -169,6 +178,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="1rR-Dx-kxG" secondAttribute="trailing" constant="-16" id="2PH-jj-6Z7"/>
                             <constraint firstItem="9y6-xW-GhX" firstAttribute="leading" secondItem="wfM-S1-8gG" secondAttribute="leadingMargin" constant="5" id="3Ua-Xx-CDK"/>
                             <constraint firstItem="EBq-0B-E0m" firstAttribute="leading" secondItem="9y6-xW-GhX" secondAttribute="trailing" constant="10" id="AHS-mS-FgZ"/>
+                            <constraint firstItem="1rR-Dx-kxG" firstAttribute="top" secondItem="ewx-bD-ej9" secondAttribute="bottom" id="AMt-K7-jLO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ewx-bD-ej9" secondAttribute="trailing" constant="-16" id="Ccf-B6-2OA"/>
                             <constraint firstItem="lM7-Bd-tPb" firstAttribute="top" secondItem="1rR-Dx-kxG" secondAttribute="bottom" id="Dbw-1t-GIg"/>
                             <constraint firstItem="1rR-Dx-kxG" firstAttribute="top" secondItem="Gjs-xP-jZB" secondAttribute="bottom" id="RdO-SL-kSh"/>
                             <constraint firstItem="1rR-Dx-kxG" firstAttribute="top" secondItem="wfM-S1-8gG" secondAttribute="topMargin" constant="120" id="YhW-od-nec"/>
@@ -176,6 +187,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Gjs-xP-jZB" secondAttribute="trailing" constant="-16" id="dla-bO-38a"/>
                             <constraint firstAttribute="trailingMargin" secondItem="EBq-0B-E0m" secondAttribute="trailing" constant="-16" id="f1Q-aL-ZKp"/>
                             <constraint firstItem="1rR-Dx-kxG" firstAttribute="leading" secondItem="wfM-S1-8gG" secondAttribute="leadingMargin" constant="-16" id="j38-LY-9gU"/>
+                            <constraint firstItem="ewx-bD-ej9" firstAttribute="leading" secondItem="wfM-S1-8gG" secondAttribute="leadingMargin" constant="-16" id="jsI-fG-4Jb"/>
+                            <constraint firstItem="ewx-bD-ej9" firstAttribute="top" secondItem="wfM-S1-8gG" secondAttribute="topMargin" id="lf7-s2-tT4"/>
                             <constraint firstItem="EBq-0B-E0m" firstAttribute="top" secondItem="QWZ-qy-AXl" secondAttribute="bottom" constant="40" id="nBa-s1-WzD"/>
                             <constraint firstItem="9y6-xW-GhX" firstAttribute="top" secondItem="QWZ-qy-AXl" secondAttribute="bottom" constant="40" id="zO4-tA-aXY"/>
                         </constraints>

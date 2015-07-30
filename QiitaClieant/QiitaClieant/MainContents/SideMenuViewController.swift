@@ -60,6 +60,11 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    @IBAction func tapProfileButton(sender: AnyObject) {
+        
+        print("プロフィール")
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
