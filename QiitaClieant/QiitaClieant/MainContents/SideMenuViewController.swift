@@ -16,7 +16,7 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var contributionLabel: UILabel!
+    @IBOutlet weak var profileLabel: UILabel!
     
     // data
     let segues = ["option 1", "option 2", "option 3"]
@@ -53,7 +53,7 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
                             (image: UIImage?) in
                             weakSelf.userImageView.image = image
                         })
-//
+                        weakSelf.profileLabel.text = jsondata["description"].string!
                     }
                 }
             }

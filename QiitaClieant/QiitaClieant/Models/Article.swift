@@ -12,7 +12,7 @@ final class Article {
     var title = ""
     var stock = 0
     var username = ""
-    var userImage = UIImage()
+    var userImageUrl = ""
     var commentNum = 0
     var date = NSDate()
 }
