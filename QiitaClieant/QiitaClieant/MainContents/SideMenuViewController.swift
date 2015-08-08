@@ -11,16 +11,21 @@ import Alamofire
 import SVProgressHUD
 import SwiftyJSON
 
+enum SideMenu:Int{
+    case AllFeed
+    case MyPost
+    case Stock
+    case Tags
+}
+
 class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var profileLabel: UILabel!
-    
-    // data
-    let segues = ["option 1", "option 2", "option 3"]
-    
+    private var tags:[[String]] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.userImageView.layer.cornerRadius = CGRectGetHeight(userImageView.frame)/2.0;
@@ -28,10 +33,12 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.registerNib(UINib(nibName: "MainArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "MainArticleTableViewCell")
+        self.tableView.registerNib(UINib(nibName: "SideMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "SideMenuTableViewCell")
+        self.tableView.registerNib(UINib(nibName: "TagMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "TagMenuTableViewCell")
+        
         self.userNameLabel.text = User.sharedUser.url_name
-        // Do any additional setup after loading the view.
         self.loadUserdata()
+        self.loadFollowingTags()
         
     }
     
@@ -42,18 +49,39 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
             if let weakSelf = self{
                 if let j:AnyObject = json{
                     let jsondata = JSON(j)
-                    print(jsondata)
                     if jsondata["error"] != nil{
                         //取得失敗
-                        print(jsondata)
+                        
                     }else{
                         //取得成功
-                        print(jsondata["profile_image_url"])
                         UIImage.loadAsyncFromURL(jsondata["profile_image_url"].string!, callback: {
                             (image: UIImage?) in
                             weakSelf.userImageView.image = image
                         })
                         weakSelf.profileLabel.text = jsondata["description"].string!
+                    }
+                }
+            }
+        }
+    }
+    
+    func loadFollowingTags(){
+        Alamofire.request(.GET, Const().baseApiUrlString+"users/\(User.sharedUser.url_name)/following_tags")
+        .responseJSON{[weak self] (request, response, json, error) in
+            if let weakSelf = self{
+                if let j:AnyObject = json{
+                    let jsondata = JSON(j)
+
+                    if jsondata["error"] != nil{
+                        //取得失敗
+                        print(jsondata)
+                    }else{
+                        //取得成功
+                        for (index: String, subJson: JSON) in jsondata {
+                            let data:[String] = [subJson["name"].string!,subJson["icon_url"].string!]
+                            weakSelf.tags.append(data)
+                        }
+                        weakSelf.tableView.reloadData()
                     }
                 }
             }
@@ -73,31 +101,87 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: UITableViewDelegate&DataSource methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return segues.count
+        if section == 0{
+            return 3
+        }
+        return self.tags.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MainArticleTableViewCell", forIndexPath: indexPath) as! MainArticleTableViewCell
-        cell.textLabel?.text = segues[indexPath.row]
-        return cell
+        if indexPath.section == 0{
+            let cell = tableView.dequeueReusableCellWithIdentifier("SideMenuTableViewCell", forIndexPath: indexPath) as! SideMenuTableViewCell
+            cell.selectionStyle = .None
+            switch indexPath.row{
+                case SideMenu.AllFeed.rawValue:
+                    cell.menuTitleLabel.text = "フィード"
+                    cell.menuImageView.image = UIImage(named: "user")
+                case SideMenu.MyPost.rawValue:
+                    cell.menuTitleLabel.text = "自分の投稿"
+                    cell.menuImageView.image = UIImage(named: "copy file")
+                case SideMenu.Stock.rawValue:
+                    cell.menuTitleLabel.text = "ストックした投稿"
+                    cell.menuImageView.image = UIImage(named: "folder")
+                default:
+                    print("error")
+                return cell
+            }
+        }else{
+            let cell = tableView.dequeueReusableCellWithIdentifier("TagMenuTableViewCell", forIndexPath: indexPath) as! TagMenuTableViewCell
+            //タグ別
+            let tagdata = self.tags[indexPath.row]
+            cell.tagNameLabel.text = tagdata[0]
+            UIImage.loadAsyncFromURL(tagdata[1], callback: {
+                (image: UIImage?) in
+                cell.tagImageView.image = image
+            })
+            return cell
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0{
+            return 70.0
+        }
+        return 40.0
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "タグ別"
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if(section == 0){
+            return 0
+        }else{
+            return 30.0
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//        let nvc = self.mainNavigationController()
-//        if let hamburguerViewController = self.findHamburguerViewController() {
-//            hamburguerViewController.hideMenuViewControllerWithCompletion({ () -> Void in
-//                nvc.visibleViewController.performSegueWithIdentifier(self.segues[indexPath.row], sender: nil)
-//                hamburguerViewController.contentViewController = nvc
-//            })
-//        }
+        var dic:Dictionary<String,AnyObject> = [:]
+        if indexPath.section == 0{
+            switch indexPath.row{
+            case SideMenu.AllFeed.rawValue:
+                dic["mode"] = SideMenu.AllFeed.rawValue
+            case SideMenu.MyPost.rawValue:
+                dic["mode"] = SideMenu.MyPost.rawValue
+            case SideMenu.Stock.rawValue:
+                dic["mode"] = SideMenu.Stock.rawValue
+            default:
+                break
+            }
+        }else{
+            //タグ別
+            dic["tag"] = self.tags[indexPath.row][0]
+        }
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "SideMenuNotification", object: self, userInfo: dic))
+        self.sidePanelController.showCenterPanelAnimated(true)
+        self.tableView.reloadData()
     }
-    
-    // MARK: - Navigation
-    
-//    func mainNavigationController() -> DLHamburguerNavigationController {
-//        return self.storyboard?.instantiateViewControllerWithIdentifier("MainNavigationController") as! DLHamburguerNavigationController
-//    }
-
-
 }
