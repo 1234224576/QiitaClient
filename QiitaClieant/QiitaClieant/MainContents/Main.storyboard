@@ -26,8 +26,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Afv-ho-YnL">
             <objects>
-                <navigationController navigationBarHidden="YES" toolbarHidden="NO" id="Re5-bw-ict" sceneMemberID="viewController">
-                    <nil key="simulatedTopBarMetrics"/>
+                <navigationController toolbarHidden="NO" id="Re5-bw-ict" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="p9i-Jr-mEz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -43,7 +42,7 @@
         <!--WebView-->
         <scene sceneID="qqx-A9-MnI">
             <objects>
-                <viewController title="WebView" id="cVb-gf-vJL" customClass="MainWebViewController" customModule="QiitaClieant" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainWebViewController" title="WebView" id="cVb-gf-vJL" customClass="MainWebViewController" customModule="QiitaClieant" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7AC-yR-SQZ"/>
                         <viewControllerLayoutGuide type="bottom" id="Ke7-Lb-2nb"/>
@@ -67,7 +66,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="wi6-rh-o0m"/>
                     <connections>
-                        <outlet property="webview" destination="L0Q-qG-MIj" id="Z8s-X4-ABy"/>
+                        <outlet property="webview" destination="L0Q-qG-MIj" id="wTY-ow-b9h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dg4-gQ-or3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -118,6 +117,7 @@
                     <navigationItem key="navigationItem" id="a0m-7c-hS4"/>
                     <connections>
                         <outlet property="tableView" destination="bXh-NW-7TD" id="msK-6E-4Lg"/>
+                        <segue destination="Re5-bw-ict" kind="showDetail" identifier="showDetail" id="Cxr-ak-3i5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tiD-IB-LMy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -162,13 +162,13 @@
                                     <constraint firstAttribute="height" constant="21" id="r23-qT-sg7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjs-xP-jZB">
                                 <rect key="frame" x="91" y="79" width="509" height="41"/>
                                 <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="11"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -218,4 +218,7 @@
             <point key="canvasLocation" x="-227" y="461"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Cxr-ak-3i5"/>
+    </inferredMetricsTieBreakers>
 </document>

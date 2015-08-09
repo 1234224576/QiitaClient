@@ -20,7 +20,8 @@ final class Const {
     // NOTE: クラスインスタンスの作成を避けたい場合
     static let hoge = "bar"
     
-   
+    
+    let baseColor = UIColor(red: 122.0/255.0, green: 188.0/255.0, blue: 46.0/255.0, alpha: 1.0)
     var spec: String {
         return join("/", [self.osName, self.osVersion, self.appVersion])
     }

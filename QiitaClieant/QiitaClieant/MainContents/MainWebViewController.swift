@@ -16,14 +16,20 @@ class MainWebViewController: UIViewController,UIWebViewDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.webview.delegate = self
         self.webview.scrollView.showsHorizontalScrollIndicator = false
-        
-       
+        self.title = "テスト・テスト"
         
         if let u =  NSURL(string: self.url){
             self.webview.loadRequest(NSURLRequest(URL: u))
         }
+    }
+    func setupNavigationBar(){
+        self.navigationController?.navigationBar.barTintColor = Const().baseColor
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
     }
        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

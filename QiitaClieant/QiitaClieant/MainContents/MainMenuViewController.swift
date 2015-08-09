@@ -19,15 +19,14 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     var currentMode = SideMenu.AllFeed
     var currentTag = "" //タグモード時のみ参照される
     var isLoading = false
+    var isNextPage = true
     private var page = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.title = "フィード"
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "receptionNotificationFromSideMenu:", name: "SideMenuNotification", object: nil)
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = true
@@ -65,8 +64,10 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
             if self.isLoading{
                 return
             }
-            self.page+=1
-            self.loadArticle()
+            if self.isNextPage{
+                self.page+=1
+                self.loadArticle()
+            }
         }
     }
 
@@ -78,8 +79,32 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count;
     }
-
-
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let article = self.articles[indexPath.row]
+        let vc : MainWebViewController = storyboard?.instantiateViewControllerWithIdentifier("MainWebViewController") as! MainWebViewController
+        print(article.url)
+        vc.url = article.url
+        if let sv = self.splitViewController{
+            if sv.collapsed{
+                self.showViewController(vc, sender: self)
+            }else{
+                self.performSegueWithIdentifier("showDetail", sender: self)
+            }
+        }
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetail" {
+            let indexPath = self.tableView.indexPathForSelectedRow()
+            if let row = indexPath?.row{
+                let article = self.articles[row]
+                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! MainWebViewController
+                controller.url = article.url
+                controller.navigationItem.leftBarButtonItem = self.splitViewController!.displayModeButtonItem()
+                controller.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -90,18 +115,19 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     }
 
     func setupNavigationBar(){
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 122.0/255.0, green: 188.0/255.0, blue: 46.0/255.0, alpha: 1.0)
+        self.navigationController?.navigationBar.barTintColor = Const().baseColor
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
         self.navigationController?.navigationBar.barStyle = .Default
         let menuButton = UIBarButtonItem(image:UIImage(named: "icon_menu")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), style: .Plain, target: self, action: "openSideMenu")
         self.navigationItem.leftBarButtonItem = menuButton
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
     }
     
     //通知を受け取る
     func receptionNotificationFromSideMenu(notification: NSNotification){
         if let userInfo = notification.userInfo {
             self.page = 1
-            self.isLoading = true
+            self.isNextPage = true
             if let mode = userInfo["mode"] as? Int{
                 switch mode{
                 case SideMenu.AllFeed.rawValue:
@@ -124,6 +150,7 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     
     private func loadArticle(){
         SVProgressHUD.show()
+        self.isLoading = true
         if self.currentMode != .Tags{
             switch self.currentMode{
             case SideMenu.AllFeed:
@@ -142,15 +169,20 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     }
 
     private func loadNewArticle(){
-        Alamofire.request(.GET, Const().baseApiUrlString+"items",parameters: ["pages":self.page])
+        Alamofire.request(.GET, Const().baseApiUrlString+"items",parameters: ["page":self.page])
             .responseJSON{ [weak self] (request, response, json, error) in
             if let weakSelf = self{
+                print(response)
+                if (response?.allHeaderFields["Link"] == nil){
+                    weakSelf.isNextPage = false
+                }
+                
                 if let j:AnyObject = json{
                     let jsondata = JSON(j)
                     if jsondata["error"] != nil{
                         //取得失敗
-                        print(jsondata)
                         weakSelf.technicalError()
+                        SVProgressHUD.dismiss()
                         
                     }else{
                         //取得成功
@@ -160,70 +192,72 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
                 }else{
                     weakSelf.networkError()
                 }
-                weakSelf.isLoading = false
-                SVProgressHUD.dismiss()
             }
         }
 
     }
     private func loadMyPostArticle(){
-        Alamofire.request(.GET, Const().baseApiUrlString+"users/\(User.sharedUser.url_name)/items",parameters: ["pages":self.page])
+        Alamofire.request(.GET, Const().baseApiUrlString+"users/\(User.sharedUser.url_name)/items",parameters: ["page":self.page])
             .responseJSON{[weak self] (request, response, json, error) in
             if let weakSelf = self{
+                if (response?.allHeaderFields["Link"] == nil){
+                    weakSelf.isNextPage = false
+                }
+                print(response)
                 if let j:AnyObject = json{
                     let jsondata = JSON(j)
                     if jsondata["error"] != nil{
                         //取得失敗
-                        print(jsondata)
                         weakSelf.technicalError()
+                        SVProgressHUD.dismiss()
                     }else{
                         //取得成功
-                        print(jsondata)
                         weakSelf.title = "自分の記事"
                         weakSelf.insertArticleData(jsondata)
                     }
                 }else{
                     weakSelf.networkError()
                 }
-                weakSelf.isLoading = false
-                SVProgressHUD.dismiss()
             }
         }
     }
     private func loadStockArticle(){
-        Alamofire.request(.GET, Const().baseApiUrlString+"users/\(User.sharedUser.url_name)/stocks",parameters: ["pages":self.page])
+        Alamofire.request(.GET, Const().baseApiUrlString+"users/\(User.sharedUser.url_name)/stocks",parameters: ["page":self.page,"per_page":20])
             .responseJSON{[weak self] (request, response, json, error) in
             if let weakSelf = self{
+                if (response?.allHeaderFields["Link"] == nil){
+                    weakSelf.isNextPage = false
+                }
                 if let j:AnyObject = json{
                     let jsondata = JSON(j)
                     if jsondata["error"] != nil{
                         //取得失敗
-                        print(jsondata)
                         weakSelf.technicalError()
+                        SVProgressHUD.dismiss()
                     }else{
                         //取得成功
-                        print(jsondata)
                         weakSelf.title = "ストック"
                         weakSelf.insertArticleData(jsondata)
                     }
                 }else{
                     weakSelf.networkError()
                 }
-                weakSelf.isLoading = false
-                SVProgressHUD.dismiss()
             }
         }
     }
     private func loadTagArticle(tag:String){
-        Alamofire.request(.GET, Const().baseApiUrlString+"tags/\(tag)/items",parameters: ["pages":self.page])
+        Alamofire.request(.GET, Const().baseApiUrlString+"tags/\(tag)/items",parameters: ["page":self.page])
             .responseJSON{[weak self] (request, response, json, error) in
             if let weakSelf = self{
+                if (response?.allHeaderFields["Link"] == nil){
+                    weakSelf.isNextPage = false
+                }
                 if let j:AnyObject = json{
                     let jsondata = JSON(j)
                     if jsondata["error"] != nil{
                         //取得失敗
-                        print(jsondata)
                         weakSelf.technicalError()
+                        SVProgressHUD.dismiss()
                     }else{
                         //取得成功
                         weakSelf.title = tag
@@ -232,8 +266,6 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
                 }else{
                     weakSelf.networkError()
                 }
-                weakSelf.isLoading = false
-                SVProgressHUD.dismiss()
             }
         }
     }
@@ -252,11 +284,12 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
             article.url = jsondata[i]["url"].string!
             articles.append(article)
         }
+        self.isLoading = false
+        SVProgressHUD.dismiss()
         self.tableView.reloadData()
     }
-    
+
     private func networkError(){
-        print("call1")
         let alert = UIAlertController(title: "エラー", message: "ネットワークに接続されていないか、何らかの障害のためデータの読み込みに失敗しました。", preferredStyle: .Alert)
         let cancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
         alert.addAction(cancel)
@@ -266,7 +299,6 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     
     }
     private func technicalError(){
-        print("call2")
         let alert = UIAlertController(title: "エラー", message: "APIのレスポンスが上限に達したため記事データを読みこめません。暫くしてから再度接続をお願いします。", preferredStyle: .Alert)
         let cancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
         alert.addAction(cancel)
@@ -275,5 +307,6 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         }
         
     }
+    
     
 }
