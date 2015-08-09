@@ -8,10 +8,11 @@
 
 import UIKit
 import WebKit
+
 class MainWebViewController: UIViewController,UIWebViewDelegate{
     
-    var url = "http://qiita.com/"
-    var articleTitle = "Qitia"
+    var url = ""
+    var articleTitle = ""
     
     @IBOutlet weak var webview: UIWebView!
 
@@ -21,11 +22,11 @@ class MainWebViewController: UIViewController,UIWebViewDelegate{
         self.webview.delegate = self
         self.webview.scrollView.showsHorizontalScrollIndicator = false
         self.title = self.articleTitle
-        
         if let u =  NSURL(string: self.url){
             self.webview.loadRequest(NSURLRequest(URL: u))
         }
     }
+
     func setupNavigationBar(){
         self.navigationController?.navigationBar.barTintColor = Const().baseColor
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]

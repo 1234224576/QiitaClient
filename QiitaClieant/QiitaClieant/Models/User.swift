@@ -16,7 +16,11 @@ final class User{
     
     var url_name : String{
         get{
-            return NSUserDefaults.standardUserDefaults().objectForKey("url_name") as! String
+            if let s = NSUserDefaults.standardUserDefaults().objectForKey("url_name") as? String{
+                return s
+            }else{
+                return ""
+            }
         }
         set(newValue){
             NSUserDefaults.standardUserDefaults().setObject(newValue as String, forKey: "url_name")
@@ -26,12 +30,35 @@ final class User{
     
     var password : String {
         get{
-            return NSUserDefaults.standardUserDefaults().objectForKey("password") as! String
+            if let s = NSUserDefaults.standardUserDefaults().objectForKey("password") as? String{
+                return s
+            }else{
+                return ""
+            }
         }
         set(newValue){
             NSUserDefaults.standardUserDefaults().setObject(newValue as String, forKey: "password")
             NSUserDefaults.standardUserDefaults().synchronize()
         }
     }
-    var token = ""
+    var token : String {
+        get{
+            if let s = NSUserDefaults.standardUserDefaults().objectForKey("token") as? String{
+                return s
+            }else{
+                return ""
+            }
+        }
+        set(newValue){
+            NSUserDefaults.standardUserDefaults().setObject(newValue as String, forKey: "token")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
+    func cleanUserData(){
+        userName = ""
+        url_name = ""
+        password = ""
+        token = ""
+    }
 }

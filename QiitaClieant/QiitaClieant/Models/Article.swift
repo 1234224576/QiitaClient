@@ -17,4 +17,5 @@ final class Article {
     var commentNum = 0
     var createdAtInWords = ""
     var tags = ""
+    var uuid = ""
 }

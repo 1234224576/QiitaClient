@@ -89,8 +89,20 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func tapProfileButton(sender: AnyObject) {
+        let alert = UIAlertController(title: "ログアウト", message: "ログアウトしますか？", preferredStyle: .Alert)
+        let yes = UIAlertAction(title: "YES", style: UIAlertActionStyle.Default){(_) in
+            User.sharedUser.cleanUserData()
+            let storyboard = UIStoryboard(name: "Login", bundle: nil)
+            let controller: LoginViewController = storyboard.instantiateInitialViewController() as! LoginViewController
+            self.presentViewController(controller, animated: true, completion: nil)
+        }
+        let no = UIAlertAction(title: "NO", style: .Cancel, handler: nil)
+        alert.addAction(no)
+        alert.addAction(yes)
+        dispatch_async(dispatch_get_main_queue()){
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
         
-        print("プロフィール")
         
     }
     override func didReceiveMemoryWarning() {

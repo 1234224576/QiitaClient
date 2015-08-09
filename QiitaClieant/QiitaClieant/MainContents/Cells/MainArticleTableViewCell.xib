@@ -30,9 +30,9 @@
                         </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Stn-zQ-ujf">
-                        <rect key="frame" x="217" y="77" width="88" height="21"/>
+                        <rect key="frame" x="217" y="77" width="70" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="88" id="AOn-SC-yvN"/>
+                            <constraint firstAttribute="width" constant="70" id="AOn-SC-yvN"/>
                             <constraint firstAttribute="height" constant="21" id="uaz-A7-GtW"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HiraKakuProN-W3" family="Hiragino Kaku Gothic ProN" pointSize="10"/>

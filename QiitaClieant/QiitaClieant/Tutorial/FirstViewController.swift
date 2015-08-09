@@ -22,7 +22,14 @@ class FirstViewController: UIViewController {
     }
     
     private func showTutorial(){
-        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.boolForKey("firstLaunch") {
+            return
+        }else{
+            defaults.setBool(true, forKey: "firstLaunch")
+            defaults.synchronize()
+            self.performSegueWithIdentifier("showTutorial", sender: self)
+        }
     }
     
     private func autologin(){

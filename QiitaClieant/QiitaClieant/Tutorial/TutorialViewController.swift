@@ -11,42 +11,28 @@ import UIKit
 class TutorialViewController: UIViewController,MYIntroductionDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
+        //tutorial1
         
-        //Create stock panel with header
-//        UIView *headerView = [[NSBundle mainBundle] loadNibNamed:@"TestHeader" owner:nil options:nil][0];
-        let headerView :UIView = NSBundle.mainBundle().loadNibNamed("TutorialHeader", owner: nil, options: nil)[0] as! UIView
+        let panel1 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "ようこそ！",description: "\nQiitaクライアント茂をダウンロードして下さりありがとうございます！\n茂はiPhoneでもiPadでも使用することができます！")
         
-        let panel1 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "aa", description: "abcdefghihkmln", header: nil)
-        let panel2 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "aa", description: "abcdefghihkmln", header: nil)
+        let panel2 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "使い方〜iPhone・iPad共通〜",description: "\n画面左上のハンバーガーマークをタップするとメニューが表示されます。\n\n自分のプロフィールの部分をタップすると、ログアウトすることができます。\nパスワードを変更した時などはここから再度ログインしなおして下さい！", image: UIImage(named: "tutorial1"))
         
-        let panels = [panel1,panel2]
+        let panel3 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "使い方〜iPhone・iPad共通〜", description: "\n記事を読んでいる時は、<マークをタップすると記事一覧に戻ることができます。\n左から右へのスワイプでもOKです。", image: UIImage(named: "tutorial2"))
+        
+        let panel4 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "使い方〜iPhone・iPad共通〜",description: "\nこのクライアントから記事をストックすることができます！\nストックしたい記事のセルをスワイプしてください！\n自分のストックした記事を表示している時は同じ操作でストックを解除になります。", image: UIImage(named: "tutorial_add"))
+        
+        let panel5 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "使い方〜iPad〜", description: "\niPadではこのようにメニューと記事が同時に表示されます。\nこの時、右側をタップもしくはスワイプするとメニューが消えます。", image: UIImage(named: "tutorial3"))
+        
+        let panel6 = MYIntroductionPanel(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), title: "使い方〜iPad〜", description: "\nこのようにiPadの大きな画面を目一杯使えます！\nメニューを表示したいときは右から左へスワイプしてください！\nもちろん、左上の<を押しても表示されます。\n\nチュートリアルは以上です！", image: UIImage(named: "tutorial4"))
+        
+        let panels = [panel1,panel2,panel3,panel4,panel5,panel6]
         let introductionView = MYBlurIntroductionView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
         introductionView.delegate = self
-        introductionView.setBackgroundColor(UIColor.redColor())
-//        introductionView.BackgroundImageView.image = [UIImage imageNamed:@"Toronto, ON.jpg"];
+        introductionView.setBackgroundColor(Const().baseColor)
         introductionView.buildIntroductionWithPanels(panels)
         self.view.addSubview(introductionView)
 
     }
-    
-//    -(void)introduction:(MYBlurIntroductionView *)introductionView didChangeToPanel:(MYIntroductionPanel *)panel withIndex:(NSInteger)panelIndex{
-//    NSLog(@"Introduction did change to panel %ld", (long)panelIndex);
-//    
-//    //You can edit introduction view properties right from the delegate method!
-//    //If it is the first panel, change the color to green!
-//    if (panelIndex == 0) {
-//    [introductionView setBackgroundColor:[UIColor colorWithRed:90.0f/255.0f green:175.0f/255.0f blue:113.0f/255.0f alpha:0.65]];
-//    }
-//    //If it is the second panel, change the color to blue!
-//    else if (panelIndex == 1){
-//    [introductionView setBackgroundColor:[UIColor colorWithRed:50.0f/255.0f green:79.0f/255.0f blue:133.0f/255.0f alpha:0.65]];
-//    }
-//    }
-//    
-//    -(void)introduction:(MYBlurIntroductionView *)introductionView didFinishWithType:(MYFinishType)finishType {
-//    NSLog(@"Introduction did finish");
-//    }
-    
     func introduction(introductionView: MYBlurIntroductionView!, didFinishWithType finishType: MYFinishType) {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let controller: LoginViewController = storyboard.instantiateInitialViewController() as! LoginViewController

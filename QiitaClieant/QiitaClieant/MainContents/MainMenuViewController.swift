@@ -30,12 +30,9 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = true
-        
+        loadNewArticle()
         // Do any additional setup after loading the view.
         
-    }
-    override func viewDidAppear(animated: Bool) {
-        loadNewArticle()
     }
     //MARK: -UITableViewDelegate,Datasorce
     
@@ -82,10 +79,57 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         return articles.count;
     }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+        
+        if self.currentMode == .Stock{
+            let swipeButton = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "ストックを解除", handler: {(tableview,indexPath) in
+                self.removeStockArticle(indexPath.row)
+            })
+            return [swipeButton]
+        }
+        let swipeButton = UITableViewRowAction(style: .Default, title: "ストック", handler: {(tableview,indexPath) in
+            self.stockArticle(indexPath.row)
+        })
+        swipeButton.backgroundColor = Const().baseColor
+        return [swipeButton]
+    }
+    
+    private func stockArticle(row:Int){
+        Alamofire.request(.PUT, Const().baseApiUrlString+"items/\(self.articles[row].uuid)/stock",parameters: ["token":User.sharedUser.token])
+            .responseJSON{ [weak self] (request, response, json, error) in
+            if let weakSelf = self{
+                if let j:AnyObject = json{
+                    weakSelf.stockError()
+                }else{
+                    weakSelf.stockComplete()
+                }
+
+            }
+        }
+    }
+    
+    private func removeStockArticle(row:Int){
+        Alamofire.request(.DELETE, Const().baseApiUrlString+"items/\(self.articles[row].uuid)/stock",parameters: ["token":User.sharedUser.token])
+            .responseJSON{ [weak self] (request, response, json, error) in
+                if let weakSelf = self{
+                    if let j:AnyObject = json{
+                        weakSelf.stockError()
+                    }else{
+                        weakSelf.removeStockComplete()
+                        weakSelf.articles.removeAtIndex(row)
+                        weakSelf.tableView.reloadData()
+                    }
+                    
+                }
+        }
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let article = self.articles[indexPath.row]
         let vc : MainWebViewController = storyboard?.instantiateViewControllerWithIdentifier("MainWebViewController") as! MainWebViewController
-        print(article.url)
         vc.url = article.url
         vc.articleTitle = article.title
         if let sv = self.splitViewController{
@@ -129,6 +173,7 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
     
     //通知を受け取る
     func receptionNotificationFromSideMenu(notification: NSNotification){
+        self.tableView.setContentOffset(CGPointMake(0, -60.0), animated: false)
         if let userInfo = notification.userInfo {
             self.page = 1
             self.isNextPage = true
@@ -176,7 +221,6 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         Alamofire.request(.GET, Const().baseApiUrlString+"items",parameters: ["page":self.page])
             .responseJSON{ [weak self] (request, response, json, error) in
             if let weakSelf = self{
-                print(response)
                 if (response?.allHeaderFields["Link"] == nil){
                     weakSelf.isNextPage = false
                 }
@@ -207,7 +251,6 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
                 if (response?.allHeaderFields["Link"] == nil){
                     weakSelf.isNextPage = false
                 }
-                print(response)
                 if let j:AnyObject = json{
                     let jsondata = JSON(j)
                     if jsondata["error"] != nil{
@@ -286,6 +329,7 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
             article.userImageUrl = jsondata[i]["user"]["profile_image_url"].string!
             article.commentNum = jsondata[i]["comment_count"].int!
             article.url = jsondata[i]["url"].string!
+            article.uuid = jsondata[i]["uuid"].string!
             article.tags = createTagsString(jsondata[i]["tags"])
             article.createdAtInWords = self.exchangeCreatedAtInWordsString(jsondata[i]["created_at_in_words"].string!)
             articles.append(article)
@@ -313,8 +357,36 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         }
     }
     
+    private func stockComplete(){
+        let alert = UIAlertController(title: "", message: "ストックしました。", preferredStyle: .Alert)
+        let cancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+        alert.addAction(cancel)
+        dispatch_async(dispatch_get_main_queue()){
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    private func removeStockComplete(){
+        let alert = UIAlertController(title: "", message: "ストックを削除しました。", preferredStyle: .Alert)
+        let cancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+        alert.addAction(cancel)
+        dispatch_async(dispatch_get_main_queue()){
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    private func stockError(){
+        let alert = UIAlertController(title: "エラー", message: "ストックに失敗しました。\n再ログインしてからお試しください。", preferredStyle: .Alert)
+        let cancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+        alert.addAction(cancel)
+        dispatch_async(dispatch_get_main_queue()){
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     func createTagsString(tagsData:JSON)->String{
-        print(tagsData)
         var tagstring = ""
         for var i=0;i<tagsData.count;i+=1{
             tagstring += tagsData[i]["name"].string!
