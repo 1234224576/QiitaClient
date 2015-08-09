@@ -9,6 +9,7 @@ pod 'SwiftyJSON', '~> 2.2.0'
 pod 'SVProgressHUD'
 pod 'SVPullToRefresh', '~> 0.4.1'
 pod 'JASidePanels'
+pod 'MYBlurIntroductionView'
 end
 
 target 'QiitaClieantTests' do
