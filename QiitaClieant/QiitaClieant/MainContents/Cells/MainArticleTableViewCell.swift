@@ -16,6 +16,7 @@ class MainArticleTableViewCell: UITableViewCell {
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var tagsLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

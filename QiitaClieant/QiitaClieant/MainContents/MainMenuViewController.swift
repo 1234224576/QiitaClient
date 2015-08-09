@@ -53,6 +53,8 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         cell.stockLabel.text = "\(article.stock)"
         cell.userNameLabel.text = article.username
         cell.commentLabel.text = "\(article.commentNum)"
+        cell.dateLabel.text = "\(article.createdAtInWords)"
+        cell.tagsLabel.text = "\(article.tags)"
         UIImage.loadAsyncFromURL(article.userImageUrl, callback: {
             (image: UIImage?) in
             cell.userImageView.image = image
@@ -85,6 +87,7 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         let vc : MainWebViewController = storyboard?.instantiateViewControllerWithIdentifier("MainWebViewController") as! MainWebViewController
         print(article.url)
         vc.url = article.url
+        vc.articleTitle = article.title
         if let sv = self.splitViewController{
             if sv.collapsed{
                 self.showViewController(vc, sender: self)
@@ -100,6 +103,7 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
                 let article = self.articles[row]
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! MainWebViewController
                 controller.url = article.url
+                controller.articleTitle = article.title
                 controller.navigationItem.leftBarButtonItem = self.splitViewController!.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -282,13 +286,15 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
             article.userImageUrl = jsondata[i]["user"]["profile_image_url"].string!
             article.commentNum = jsondata[i]["comment_count"].int!
             article.url = jsondata[i]["url"].string!
+            article.tags = createTagsString(jsondata[i]["tags"])
+            article.createdAtInWords = self.exchangeCreatedAtInWordsString(jsondata[i]["created_at_in_words"].string!)
             articles.append(article)
         }
         self.isLoading = false
         SVProgressHUD.dismiss()
         self.tableView.reloadData()
     }
-
+    
     private func networkError(){
         let alert = UIAlertController(title: "エラー", message: "ネットワークに接続されていないか、何らかの障害のためデータの読み込みに失敗しました。", preferredStyle: .Alert)
         let cancel = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
@@ -305,7 +311,33 @@ class MainMenuViewController: MenuTableBaseViewController ,UITableViewDataSource
         dispatch_async(dispatch_get_main_queue()){
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
+    }
+    
+    func createTagsString(tagsData:JSON)->String{
+        print(tagsData)
+        var tagstring = ""
+        for var i=0;i<tagsData.count;i+=1{
+            tagstring += tagsData[i]["name"].string!
+            tagstring += " "
+        }
+        return tagstring
+    }
+    
+    func exchangeCreatedAtInWordsString(createdAtInWords:String)->String{
+        var resultword = createdAtInWords
+        resultword = resultword.stringByReplacingOccurrencesOfString("about", withString: "", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("months", withString: "ヶ月前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("days", withString: "日前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("hours", withString: "時間前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("minutes", withString: "分前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("month", withString: "ヶ月前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("day", withString: "日前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("hour", withString: "時間前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("minute", withString: "分前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("over", withString: "", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("years", withString: "年前", options: nil, range: nil)
+        resultword = resultword.stringByReplacingOccurrencesOfString("year", withString: "年前", options: nil, range: nil)
+        return resultword
     }
     
     

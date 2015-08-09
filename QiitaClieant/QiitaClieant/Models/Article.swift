@@ -15,5 +15,6 @@ final class Article {
     var url = ""
     var userImageUrl = ""
     var commentNum = 0
-    var date = NSDate()
+    var createdAtInWords = ""
+    var tags = ""
 }

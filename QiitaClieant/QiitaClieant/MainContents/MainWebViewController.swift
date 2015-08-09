@@ -10,7 +10,8 @@ import UIKit
 import WebKit
 class MainWebViewController: UIViewController,UIWebViewDelegate{
     
-    var url = "http://iphone-tora.sakura.ne.jp/uiwebview.html"
+    var url = "http://qiita.com/"
+    var articleTitle = "Qitia"
     
     @IBOutlet weak var webview: UIWebView!
 
@@ -19,7 +20,7 @@ class MainWebViewController: UIViewController,UIWebViewDelegate{
         self.setupNavigationBar()
         self.webview.delegate = self
         self.webview.scrollView.showsHorizontalScrollIndicator = false
-        self.title = "テスト・テスト"
+        self.title = self.articleTitle
         
         if let u =  NSURL(string: self.url){
             self.webview.loadRequest(NSURLRequest(URL: u))

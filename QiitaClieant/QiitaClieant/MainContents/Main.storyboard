@@ -26,7 +26,8 @@
         <!--Navigation Controller-->
         <scene sceneID="Afv-ho-YnL">
             <objects>
-                <navigationController toolbarHidden="NO" id="Re5-bw-ict" sceneMemberID="viewController">
+                <navigationController id="Re5-bw-ict" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="p9i-Jr-mEz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -48,11 +49,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Ke7-Lb-2nb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XbT-0r-w4F">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L0Q-qG-MIj">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
                         </subviews>
@@ -77,6 +78,7 @@
         <scene sceneID="E39-L1-zjZ">
             <objects>
                 <navigationController storyboardIdentifier="MainNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d2X-CQ-BdE" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="K71-rJ-BPd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
